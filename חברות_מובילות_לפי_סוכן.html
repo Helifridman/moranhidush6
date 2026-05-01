@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חברות מובילות לפי סוכן | רוזן ענק הביטוח</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #006B6B;
+    --teal-light: #0F8F8F;
+    --teal-pale: #E0F4F4;
+    --teal-mid: #5DCAA5;
+    --orange: #C0570F;
+    --bg: #F5F8F8;
+    --white: #ffffff;
+    --text: #1A2C2C;
+    --text-muted: #5A7878;
+    --border: #D0E8E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--teal);
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,107,107,0.18);
+  }
+  .logo-area { display: flex; align-items: center; gap: 14px; }
+  .logo-circle {
+    width: 46px; height: 46px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: #fff;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  header h1 { font-size: 20px; font-weight: 700; color: #fff; line-height: 1.2; }
+  header p { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .header-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 24px;
+    align-items: center;
+  }
+  .filters-label {
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+  .filter-btn {
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px; font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-btn.active {
+    background: var(--teal);
+    color: #fff;
+    border-color: var(--teal);
+  }
+
+  .summary-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    display: flex; gap: 32px; flex-wrap: wrap;
+    align-items: center;
+  }
+  .stat { text-align: center; }
+  .stat-val { font-size: 24px; font-weight: 700; color: var(--teal); line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .agent-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .agent-card:hover {
+    box-shadow: 0 4px 20px rgba(0,107,107,0.12);
+    transform: translateY(-2px);
+  }
+  .card-header {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .agent-name { font-size: 16px; font-weight: 700; color: #fff; }
+  .agent-branch { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .total-pill {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px; font-weight: 600; color: #fff;
+  }
+
+  .card-body { padding: 16px 18px; }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+  .rank {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    color: var(--teal);
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank.r1 { background: var(--teal); color: #fff; }
+  .bar-label {
+    font-size: 11px; color: var(--text-muted);
+    min-width: 100px; max-width: 100px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-align: right;
+  }
+  .bar-wrap {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex; align-items: center;
+    justify-content: flex-end;
+    padding-left: 7px;
+    min-width: 28px;
+  }
+  .bar-val { font-size: 11px; font-weight: 600; color: #fff; }
+
+  .no-results {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-muted); font-size: 14px;
+    grid-column: 1/-1;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="logo-circle">ר</div>
+    <div>
+      <h1>רוזן ענק הביטוח</h1>
+      <p>חברות מובילות לפי סוכן – פילוח חידוש רכב</p>
+    </div>
+  </div>
+  <div class="header-badge" id="total-badge">סה"כ 1,915 חידושים</div>
+</header>
+
+<div class="container">
+
+  <div class="summary-bar" id="summary-bar">
+    <div class="stat"><div class="stat-val" id="s-agents">21</div><div class="stat-label">סוכנים</div></div>
+    <div style="width:1px;background:var(--border);height:36px;"></div>
+    <div class="stat"><div class="stat-val" id="s-total">1,915</div><div class="stat-label">חידושים</div></div>
+    <div style="width:1px;background:var(--border);height:36px;"></div>
+    <div class="stat"><div class="stat-val" style="color:#C0570F" id="s-top">מגדל לייט / איילון</div><div class="stat-label">חברות מובילות</div></div>
+  </div>
+
+  <div class="filters">
+    <span class="filters-label">סינון לפי סניף:</span>
+    <div id="filter-btns"></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>רוזן ענק הביטוח · *6446 · 9825555.co.il</footer>
+
+<script>
+const COLORS = ['#006B6B','#0F8F8F','#5DCAA5','#9FE1CB','#C5EDE5'];
+
+const ALL_DATA = {
+  'ליטל':     { branch:'מוצקין',    total:158, comps:[['פניקס מסלול',31],['איילון',29],['שלמה פיקס+',22],['מגדל לייט',20],['שירביט בסט',9]] },
+  'שירלי':    { branch:'ק.אתא',     total:154, comps:[['מגדל לייט',48],['איילון',25],['שלמה פיקס+',14],['שירביט בסט',14],['פניקס מסלול',9]] },
+  'ענת':      { branch:'כרמיאל',    total:154, comps:[['מגדל לייט',27],['איילון',27],['הפניקס זהיר',16],['הכשרה אקספרס',12],['שלמה פיקס+',12]] },
+  'אורלי':    { branch:'נהריה',     total:138, comps:[['מגדל לייט',34],['איילון',33],['פניקס מסלול',15],['שירביט בסט',7],['מגדל ישקר',6]] },
+  'צליל':     { branch:'ק.אתא',     total:126, comps:[['איילון',15],['שלמה פיקס+',12],['הפניקס זהיר',11],['מגדל לייט',11],['הכשרה אקספרס',11]] },
+  'מיטל':     { branch:"צ'ק-פוסט", total:125, comps:[['איילון',32],['מגדל לייט',30],['שלמה פיקס+',15],['הפניקס זהיר',8],['הכשרה אקספרס',7]] },
+  'חן':       { branch:'נהריה',     total:122, comps:[['מגדל לייט',47],['איילון',29],['פניקס מסלול',11],['מגדל',7],['שירביט בסט',7]] },
+  'שרית':     { branch:'נו"ש',      total:121, comps:[['שלמה פיקס+',45],['פניקס מסלול',17],['איילון',9],['מגדל לייט',7],['שומרה',7]] },
+  'כוכי':     { branch:'נו"ש',      total:119, comps:[['איילון',34],['פניקס מסלול',33],['מגדל לייט',17],['Fixer שלמה',7],['הראל מסלול זהב',5]] },
+  'לנה':      { branch:'נהריה',     total:117, comps:[['איילון',20],['מגדל לייט',12],['שירביט בסט',10],['הפניקס זהיר',9],['הכשרה אקספרס',7]] },
+  'אסתי':     { branch:"צ'ק-פוסט", total:111, comps:[['איילון',37],['מגדל לייט',19],['הפניקס זהיר',12],['הראל סוויץ',6],['Fixer שלמה',5]] },
+  'חיה':      { branch:'נהריה',     total:102, comps:[['מגדל לייט',22],['איילון',19],['מגדל על',9],['פניקס מסלול',8],['הפניקס זהיר',7]] },
+  'חלי.כהן':  { branch:'נהריה',     total:81,  comps:[['איילון',29],['פניקס מסלול',7],['הפניקס זהיר',6],['פניקס זהיר',5],['שומרה C שארפ',4]] },
+  'אסתי.ב.':  { branch:'נהריה',     total:80,  comps:[['שלמה פיקס+',39],['הכשרה אקספרס',14],['שומרה',4],['מגדל על',4],['שלמה',3]] },
+  'חסן-אלון': { branch:'יקנעם',     total:60,  comps:[['שלמה פיקס+',13],['מגדל לייט',12],['מגדל על',9],['איילון',9],['מגדל',4]] },
+  'סוסו':     { branch:'נהריה',     total:57,  comps:[['שלמה פיקס+',26],['הכשרה אקספרס',7],['הכשרה',6],['שומרה',5],['מגדל על',5]] },
+  'חיה.פ.':   { branch:'נהריה/כרמיאל', total:39, comps:[['שלמה פיקס+',21],['שלמה מסלול 328',4],['הכשרה',3],['שומרה',2],['ביטוח חקלאי',2]] },
+  'רעות':     { branch:'כלים',      total:26,  comps:[['כלל',15],['חובה בלבד',11]] },
+  'מיקי':     { branch:'כלים',      total:20,  comps:[['כלל',6],['שומרה',4],['הראל',3],['חובה בלבד',2],['הכשרה',2]] },
+  'גלית':     { branch:'סוכנים',    total:4,   comps:[['איילון',1],['שלמה 327',1],['שלמה פיקס+',1],['מגדל לייט',1]] },
+  'שירה':     { branch:'נהריה',     total:1,   comps:[['הכשרה',1]] },
+};
+
+const BRANCHES = ['הכל','מוצקין','ק.אתא','כרמיאל','נהריה','נו"ש',"צ'ק-פוסט",'יקנעם','כלים','סוכנים'];
+
+let activeFilter = 'הכל';
+
+function filterAgents() {
+  if (activeFilter === 'הכל') return Object.keys(ALL_DATA);
+  return Object.keys(ALL_DATA).filter(a => ALL_DATA[a].branch.includes(activeFilter));
+}
+
+function updateSummary(agents) {
+  const total = agents.reduce((s,a) => s + ALL_DATA[a].total, 0);
+  document.getElementById('s-agents').textContent = agents.length;
+  document.getElementById('s-total').textContent = total.toLocaleString();
+}
+
+function renderFilters() {
+  document.getElementById('filter-btns').innerHTML = BRANCHES.map(b =>
+    `<button class="filter-btn${b===activeFilter?' active':''}" onclick="setFilter('${b}')">${b}</button>`
+  ).join('');
+}
+
+function renderGrid() {
+  const agents = filterAgents();
+  updateSummary(agents);
+  if (!agents.length) {
+    document.getElementById('grid').innerHTML = '<div class="no-results">לא נמצאו נתונים</div>';
+    return;
+  }
+  document.getElementById('grid').innerHTML = agents.map(agent => {
+    const { branch, total, comps } = ALL_DATA[agent];
+    const max = comps[0][1];
+    const bars = comps.map(([name, val], i) => {
+      const pct = Math.round((val / max) * 100);
+      return `<div class="bar-row">
+        <span class="rank${i===0?' r1':''}">${i+1}</span>
+        <span class="bar-label" title="${name}">${name}</span>
+        <div class="bar-wrap">
+          <div class="bar-fill" style="width:${pct}%;background:${COLORS[i]}">
+            <span class="bar-val">${val}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="agent-card">
+      <div class="card-header">
+        <div>
+          <div class="agent-name">${agent}</div>
+          <div class="agent-branch">${branch}</div>
+        </div>
+        <div class="total-pill">${total} חידושים</div>
+      </div>
+      <div class="card-body">${bars}</div>
+    </div>`;
+  }).join('');
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  renderFilters();
+  renderGrid();
+}
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>
